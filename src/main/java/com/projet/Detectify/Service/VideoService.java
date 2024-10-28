@@ -32,5 +32,20 @@ public class VideoService {
     public void deleteVideo(String id) {
         videoRepository.deleteById(id);
     }
+
+    // Nouvelle méthode pour marquer une vidéo comme archivée
+    public Optional<Video> archiveVideo(String id) {
+        Optional<Video> videoOpt = videoRepository.findById(id);
+        videoOpt.ifPresent(video -> {
+            video.setArchived(true);
+            videoRepository.save(video);
+        });
+        return videoOpt;
+    }
+
+    // Nouvelle méthode pour récupérer toutes les vidéos archivées
+    public List<Video> getArchivedVideos() {
+        return videoRepository.findByArchived(true);
+    }
 }
 

@@ -1,4 +1,5 @@
 package com.projet.Detectify.Controller;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import com.projet.Detectify.Model.Video;
 import com.projet.Detectify.Service.VideoService;
@@ -13,6 +14,9 @@ public class VideoController {
 
     @Autowired
     private VideoService videoService;
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     @GetMapping
     public List<Video> getAllVideos() {
@@ -33,5 +37,18 @@ public class VideoController {
     public void deleteVideo(@PathVariable String id) {
         videoService.deleteVideo(id);
     }
-}
+
+    @PutMapping("/{id}/archive")
+    public Optional<Video> archiveVideo(@PathVariable String id) {
+        Optional<Video> videoOpt = videoService.archiveVideo(id);
+        videoOpt.ifPresent(video -> {
+            messagingTemplate.convertAndSend("/topic/videos", video);
+        });
+        return videoOpt;
+    }
+
+    @GetMapping("/archived")
+    public List<Video> getArchivedVideos() {
+        return videoService.getArchivedVideos();
+}}
 

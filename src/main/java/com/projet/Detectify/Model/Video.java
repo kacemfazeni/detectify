@@ -18,9 +18,13 @@ public class Video {
     private String title;
     private String url;
     private List<DetectedObject> detectedObjects;
+    private boolean archived = false; // Nouveau champ ajouté
+
 
     public Video(String title, String url, List<DetectedObject> detectedObjects) {
         this.title = title;
         this.url = url;
         this.detectedObjects = detectedObjects;
-}}
+        this.archived = false; // Par défaut, une vidéo n'est pas archivée
+
+    }}

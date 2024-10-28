@@ -11,4 +11,5 @@ public interface VideoRepo extends MongoRepository <Video,String>{
 
     // Recherche de vidéos par URL
     List<Video> findByUrl(String url);
+    List<Video> findByArchived(boolean archived);
 }
