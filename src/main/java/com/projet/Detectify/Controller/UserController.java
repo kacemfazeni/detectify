@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = "http://localhost:4200") // Allow Angular to access the backend
 public class UserController {
     @Autowired
     private UserService userService;
